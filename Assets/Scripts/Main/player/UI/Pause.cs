@@ -57,11 +57,27 @@ public class Pause : MonoBehaviour
     public void MenuLoad()
     {
         SceneManager.LoadScene(0);
+        Cursor.visible = true;
     }
 
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
+        Cursor.visible = false;
+    }
+
+    public void Continue()
+    {
+        if (SceneManager.GetActiveScene().buildIndex + 1 < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            Cursor.visible = false;
+        }
+        else
+        {
+            MenuLoad();
+        }
         Time.timeScale = 1;
     }
     public void Quit()

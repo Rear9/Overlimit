@@ -7,7 +7,7 @@ public class Slowmo : MonoBehaviour
     public bool slow;
     public float cutDistance;
     public float slowInc, slowFinal;
-    public GameObject fracBullet;
+    public GameObject fracBullet, fracEnemy;
 
     private void OnDrawGizmos()
     {
@@ -24,21 +24,39 @@ public class Slowmo : MonoBehaviour
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, cutDistance) && hit.collider.gameObject.CompareTag("Bullet"))
+        GameObject brokenObj;
+        if (Physics.Raycast(ray, out hit, cutDistance))
         {
+            if (hit.collider.gameObject.CompareTag("Bullet"))
+            {
+                brokenObj = fracBullet;
+            }
+            else if (hit.collider.gameObject.CompareTag("Enemy"))
+            {
+                brokenObj = fracEnemy;
+            }
+            else
+            {
+                brokenObj = null;
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
+                if (!brokenObj) return;
                 Vector3 breakVel = hit.rigidbody.velocity;
+                Vector3 breakPos = hit.collider.gameObject.transform.position;
+                Quaternion breakRot = hit.collider.gameObject.transform.rotation;
+                Debug.Log(breakVel + " " + breakPos + " " + breakRot);
                 hit.collider.gameObject.SetActive(false);
-                GameObject fracBull = Instantiate(fracBullet, hit.point, Quaternion.identity);
-                foreach (Transform part in fracBull.transform)
+                GameObject fracObj = Instantiate(brokenObj, breakPos, breakRot);
+                foreach (Transform part in fracObj.transform)
                 {
                     var rb = part.GetComponent<Rigidbody>();
                     if (rb != null)
                     {
                         rb.velocity = breakVel;
-                        rb.AddExplosionForce(Random.Range(1, 2), hit.point, 2);
-                        Destroy(fracBull, 2);
+                        rb.AddExplosionForce(Random.Range(1, 1.75f), hit.point, 2);
+                        Destroy(fracObj, 2);
                     }
                 }
             }

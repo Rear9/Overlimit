@@ -13,6 +13,7 @@ public class playerCheck : MonoBehaviour
             Destroy(gameObject);
             slowmo.UnSlow();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Cursor.visible = false;
         }
         else if(collision.gameObject.CompareTag("wall"))
         {

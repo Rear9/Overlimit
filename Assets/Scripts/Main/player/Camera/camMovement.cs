@@ -28,7 +28,6 @@ public class camMovement : MonoBehaviour
         fov = PlayerPrefs.GetFloat("Fov");
         sensX = PlayerPrefs.GetFloat("Sens");
         sensY = PlayerPrefs.GetFloat("Sens");
-        Debug.Log(fov + " " + sensX + " " + sensY);
         RotateCam();
     }
 

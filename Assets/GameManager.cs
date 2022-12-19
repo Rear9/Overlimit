@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Slider fovSlider, sensSlider, volumeSlider;
-
     private void Update()
     {
         PlayerPrefs.SetFloat("Fov", fovSlider.value);

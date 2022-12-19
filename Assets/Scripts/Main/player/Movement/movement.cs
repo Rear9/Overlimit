@@ -96,11 +96,11 @@ public class movement : MonoBehaviour
         gameManager.fovSlider.value = PlayerPrefs.GetFloat("Fov");
         gameManager.sensSlider.value = PlayerPrefs.GetFloat("Sens");
         gameManager.volumeSlider.value = PlayerPrefs.GetFloat("Volume");
-        Cursor.visible = false;
         ready = true;
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         slideHeight = gameObject.transform.localScale.y;
+        Cursor.visible = false;
     }
 
     private void movePlayer()

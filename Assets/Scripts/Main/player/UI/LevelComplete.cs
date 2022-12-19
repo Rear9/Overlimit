@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelComplete : MonoBehaviour
 {
+    public Score score;
+    public Enemies enemies;
     public bool completed;
     public GameObject levelCompleteUI;
 
@@ -15,17 +17,12 @@ public class LevelComplete : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("PlayerBase")){
-            if (completed) return;
+            if (score.score != score.coinLength || enemies.enemyCount != 0) return;
             completed = true;
             Time.timeScale = 0;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             levelCompleteUI.SetActive(true);
         }
-    }
-
-    public void NextLevel()
-    {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

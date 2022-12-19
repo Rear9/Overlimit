@@ -23,7 +23,14 @@ public class PlayerDetection : MonoBehaviour
         playerDetect = Physics.Raycast(transform.position, direction, out cast, castRange);
         distance = Vector3.Distance(player.transform.position, transform.position);
         Quaternion toRotate = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Lerp(transform.rotation, toRotate, 5 * Time.deltaTime);
+        
+        if(playerDetect && player.transform.position.y < transform.position.y * 2)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, toRotate, 3 * Time.deltaTime);
+        }
+
+
+
         if (shootTime > 0) shootTime -= Time.deltaTime;
         if (playerDetect && shootTime <= 0 && distance < castRange)
         {

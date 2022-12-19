@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941bb97e285ca9346a578c23aaa79bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   Wallrun: {fileID: 5904051218471787424}
   climb: {fileID: 5904051218471787425}
   state: 0
@@ -163,6 +164,10 @@ MonoBehaviour:
   sprintJumpF: 10
   jumpCd: 0.5
   airmult: 1.2
+  sliderTime: 0
+  sliderTimer: 0
+  slideSpeed: 0
+  slideHeight: 0
   floor:
     serializedVersion: 2
     m_Bits: 8
@@ -171,6 +176,7 @@ MonoBehaviour:
   height: 2
   jumpKey: 32
   sprintKey: 304
+  slideKey: 99
 --- !u!114 &5904051218471787424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +221,7 @@ MonoBehaviour:
   wall:
     serializedVersion: 2
     m_Bits: 64
-  climbSpeed: 8
+  climbSpeed: 12
   maxClimbTime: 2
   climbing: 0
   climbJumps: 0
@@ -243,6 +249,8 @@ MonoBehaviour:
   slowFinal: 0.1
   fracBullet: {fileID: 2228614159802873276, guid: 54f70444a1e3878418bf483af4ad574f,
     type: 3}
+  fracEnemy: {fileID: 1806427755530799546, guid: 4810cb0e45f2a764c8e36d7359906bba,
+    type: 3}
 --- !u!114 &2025144048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +274,8 @@ AudioSource:
   m_GameObject: {fileID: 5904051217914551993}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: ec7a8f9a107696649862b0d38fb4393e,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: c585f862f069a884387e2fa105863d8a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2

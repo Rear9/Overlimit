@@ -6,7 +6,7 @@ using UnityEngine;
 public class Score : MonoBehaviour
 {
     private TMP_Text text;
-    public float score;
+    public int score, coinLength;
     private GameObject[] coins;
     public AudioSource coinpickup;
 
@@ -15,10 +15,10 @@ public class Score : MonoBehaviour
         score = 0;
         text = GetComponent<TMP_Text>();
         coins = GameObject.FindGameObjectsWithTag("coin");
+        coinLength = coins.Length;
     }
     private void Update()
     {
-        text.text = "Coins: " + score + "/" + coins.Length;
-        Debug.Log(score);
+        text.text = "Coins: " + score + "/" + coinLength;
     }
 }
