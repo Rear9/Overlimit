@@ -17,12 +17,14 @@ public class LevelComplete : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("PlayerBase")){
-            if (score.score != score.coinLength || enemies.enemyCount != 0) return;
-            completed = true;
-            Time.timeScale = 0;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            levelCompleteUI.SetActive(true);
+            if (score.score == score.coinLength || enemies.enemyCount == 0)
+            {
+                completed = true;
+                Time.timeScale = 0;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                levelCompleteUI.SetActive(true);
+            }
         }
     }
 }
