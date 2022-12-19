@@ -12,7 +12,7 @@ public class movement : MonoBehaviour
     public Climb climb;
     public State state;
     [SerializeField]
-    private float baseSpeed, walkSpeed, sprintSpeed;
+    private float baseSpeed, crouchSpeed, walkSpeed, sprintSpeed;
     public Vector3 moveDir, groundNormal = Vector3.up;
     private float horizontalInput, verticalInput;
     public Rigidbody rb;
@@ -28,8 +28,17 @@ public class movement : MonoBehaviour
     bool ready;
 
     [Header("Slide")]
-    public float sliderTime, sliderTimer, slideSpeed, slideHeight;
+    private float slideTime = 2f;
+    public float slideTimer;
+    public float slideCd;
+    private float slideSpeed;
+    private float slideMult = 5f;
     private bool sliding;
+
+    [Header("Crouch")]
+    private float startHeight;
+    public float crouchHeight;
+    private bool crouching;
 
     [Header("Drag")]
     public LayerMask floor;
@@ -39,7 +48,7 @@ public class movement : MonoBehaviour
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
-    public KeyCode slideKey = KeyCode.C;
+    public KeyCode crouchKey = KeyCode.C;
 
     public enum State
     {
@@ -47,19 +56,41 @@ public class movement : MonoBehaviour
         Sprint,
         Wallrunning,
         Climbing,
+        Crouching,
         Sliding,
         Air
     }
 
     private void StateHandler()
     {
-        if (ground && Input.GetKey(sprintKey) && Input.GetAxis("Vertical") > 0.9 && Input.GetAxis("Horizontal") == 0)
+        if (Input.GetKey(crouchKey) && !Input.GetKey(sprintKey) && ground)
+        {
+            state = State.Crouching;
+            baseSpeed = Mathf.Lerp(baseSpeed,crouchSpeed,.1f);
+            transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, crouchHeight, 0.1f), transform.localScale.z);
+        }
+        else
+        {
+            transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, startHeight, 0.1f), transform.localScale.z);
+        }
+        if(Input.GetKey(crouchKey) && Input.GetKey(sprintKey) && slideTimer>=0 && ground)
+        {
+            state = State.Sliding;
+            transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, crouchHeight, 0.1f), transform.localScale.z);
+            Slide();
+        }
+        else
+        {
+            transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, startHeight, 0.1f), transform.localScale.z);
+            UnSlide();
+        }
+        if (ground && !crouching && !sliding && Input.GetKey(sprintKey) && Input.GetAxis("Vertical") > 0.9 && Input.GetAxis("Horizontal") == 0)
         {
             state = State.Sprint;
             jumpF = sprintJumpF;
             baseSpeed = Mathf.Lerp(baseSpeed, sprintSpeed, .005f);
         }
-        else if (ground)
+        else if (ground && !crouching && !sliding)
         {
             jumpF = baseJumpF;
             state = State.Walk;
@@ -73,7 +104,7 @@ public class movement : MonoBehaviour
         {
             state = State.Climbing;
         }
-        else
+        else if(!ground)
         {
             state = State.Air;
         }
@@ -90,22 +121,34 @@ public class movement : MonoBehaviour
             jump();
             Invoke(nameof(resetjump), jumpCd);
         }
+
+        if (Input.GetKeyDown(crouchKey))
+        {
+            crouching = true;
+            
+        }
+        if (Input.GetKeyUp(crouchKey))
+        {
+            crouching = false;
+        }
     }
     private void Start()
     {
+        slideCd = 0;
+        slideTimer = slideTime;
         gameManager.fovSlider.value = PlayerPrefs.GetFloat("Fov");
         gameManager.sensSlider.value = PlayerPrefs.GetFloat("Sens");
         gameManager.volumeSlider.value = PlayerPrefs.GetFloat("Volume");
         ready = true;
         rb = GetComponent<Rigidbody>();
+        startHeight = transform.localScale.y;
         rb.freezeRotation = true;
-        slideHeight = gameObject.transform.localScale.y;
         Cursor.visible = false;
     }
 
     private void movePlayer()
     {
-        if (climb.exitingWall) return;
+        if (climb.exitingWall || sliding) return;
         moveDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         if (ground)
@@ -124,7 +167,8 @@ public class movement : MonoBehaviour
         Inputs();
         speedControl();
         RaycastHit hit;
-        ground = Physics.SphereCast(transform.position, 0.3f, Vector3.down,out hit, height/2.5f, floor);
+        height = transform.localScale.y;
+        ground = Physics.SphereCast(transform.position, 0.3f, Vector3.down,out hit, height, floor);
         if (ground)
         {
             rb.drag = baseDrag;
@@ -138,10 +182,21 @@ public class movement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (sliding)
+        {
+            slideTimer -= Time.deltaTime;
+            slideMult = Mathf.Lerp(slideMult, 0, 0.02f);
+
+            if(slideTimer<=0 && sliding)
+            {
+                UnSlide();
+            }
+        }
         movePlayer();
     }
     private void speedControl()
     {
+        if (sliding) return;
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if (flatVel.magnitude > baseSpeed)
         {
@@ -159,6 +214,22 @@ public class movement : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpF, ForceMode.Impulse);
     }
+    private void Slide()
+    {
+        slideSpeed = baseSpeed * slideMult;
+        Debug.Log(slideSpeed);
+        rb.AddForce(moveDir * slideSpeed, ForceMode.Acceleration);
+        sliding = true;
+    }
+
+
+    private void UnSlide()
+    {
+        sliding = false;
+        slideTimer = slideTime;
+        slideMult = 5f;
+    }
+
     private void resetjump()
     {
         ready = true;

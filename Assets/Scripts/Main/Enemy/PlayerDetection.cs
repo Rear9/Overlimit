@@ -14,13 +14,13 @@ public class PlayerDetection : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindWithTag("PlayerBase");
+        player = GameObject.FindWithTag("Player");
         shootTime = shootTimer;
     }
     private void Update()
     {
         direction = (player.transform.position - transform.position).normalized;
-        playerDetect = Physics.Raycast(transform.position, direction, out cast, castRange);
+        playerDetect = Physics.Raycast(transform.position,direction, out cast, castRange);
         distance = Vector3.Distance(player.transform.position, transform.position);
         Quaternion toRotate = Quaternion.LookRotation(direction);
         
@@ -40,8 +40,9 @@ public class PlayerDetection : MonoBehaviour
 
     private void ShootTowardsPlayer()
     {
-        GameObject shot = Instantiate(bullet, transform.position+transform.up*.5f+transform.right*.25f, Quaternion.Euler(direction));
-        shot.GetComponent<Rigidbody>().AddRelativeForce(direction*shootSpeed,ForceMode.Impulse);
+        Vector3 finalDirection = Quaternion.Euler(Random.Range(-2,0), Random.Range(-3,3), 0) * direction;
+        GameObject shot = Instantiate(bullet, transform.position+transform.up*1f+transform.right*-.3f, Quaternion.Euler(finalDirection));
+        shot.GetComponent<Rigidbody>().AddRelativeForce(finalDirection*shootSpeed,ForceMode.Impulse);
         shootTime = shootTimer;
     }
 }

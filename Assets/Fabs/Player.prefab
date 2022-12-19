@@ -152,6 +152,7 @@ MonoBehaviour:
   climb: {fileID: 5904051218471787425}
   state: 0
   baseSpeed: 8
+  crouchSpeed: 4
   walkSpeed: 8
   sprintSpeed: 12
   moveDir: {x: 0, y: 0, z: 0}
@@ -159,6 +160,7 @@ MonoBehaviour:
   rb: {fileID: 5904051218471787439}
   col: {fileID: 5904051218310801890}
   orientation: {fileID: 5904051218256165083}
+  playerObj: {fileID: 5904051218680913672}
   jumpF: 8
   baseJumpF: 8
   sprintJumpF: 10
@@ -167,7 +169,6 @@ MonoBehaviour:
   sliderTime: 0
   sliderTimer: 0
   slideSpeed: 0
-  slideHeight: 0
   floor:
     serializedVersion: 2
     m_Bits: 8
@@ -176,7 +177,7 @@ MonoBehaviour:
   height: 2
   jumpKey: 32
   sprintKey: 304
-  slideKey: 99
+  crouchKey: 99
 --- !u!114 &5904051218471787424
 MonoBehaviour:
   m_ObjectHideFlags: 0
