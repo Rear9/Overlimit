@@ -15,6 +15,7 @@ public class camMovement : MonoBehaviour
     public static float fov;
     private float xRot, yRot, baseFov = 75f, maxFov = 130f;
     public Rigidbody rb;
+    public float mouseX, mouseY;
 
     private void Start()
     {
@@ -25,6 +26,8 @@ public class camMovement : MonoBehaviour
 
     private void Update()
     {
+        mouseX = Input.GetAxisRaw("Mouse X") * Time.fixedDeltaTime * sensX;
+        mouseY = Input.GetAxisRaw("Mouse Y") * Time.fixedDeltaTime * sensY;
         fov = PlayerPrefs.GetFloat("Fov");
         sensX = PlayerPrefs.GetFloat("Sens");
         sensY = PlayerPrefs.GetFloat("Sens");
@@ -32,6 +35,11 @@ public class camMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (slowmo.slow)
+        {
+            mouseX *= slowSens;
+            mouseY *= slowSens;
+        }
         float addFov = rb.velocity.magnitude - 3f;
         if (climb.climbing)
         {
@@ -44,8 +52,8 @@ public class camMovement : MonoBehaviour
 
     private void LateUpdate()
     {
-        RotateCam();
         cam.fieldOfView = fov;
+        RotateCam();
     }
     void RotateCam()
     {

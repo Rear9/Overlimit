@@ -32,7 +32,7 @@ public class movement : MonoBehaviour
     public float slideTimer;
     public float slideCd;
     private float slideSpeed;
-    private float slideMult = 5f;
+    private float slideMult = 200f;
     private bool sliding;
 
     [Header("Crouch")]
@@ -216,7 +216,7 @@ public class movement : MonoBehaviour
     }
     private void Slide()
     {
-        slideSpeed = baseSpeed * slideMult;
+        slideSpeed = baseSpeed * slideMult * Time.fixedDeltaTime;
         Debug.Log(slideSpeed);
         rb.AddForce(moveDir * slideSpeed, ForceMode.Acceleration);
         sliding = true;
@@ -227,7 +227,7 @@ public class movement : MonoBehaviour
     {
         sliding = false;
         slideTimer = slideTime;
-        slideMult = 5f;
+        slideMult = 200f;
     }
 
     private void resetjump()

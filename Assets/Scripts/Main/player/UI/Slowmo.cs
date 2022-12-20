@@ -61,7 +61,10 @@ public class Slowmo : MonoBehaviour
                 }
             }
         }
+    }
 
+    private void LateUpdate()
+    {
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (slow)
@@ -74,7 +77,7 @@ public class Slowmo : MonoBehaviour
             }
         }
     }
-   
+
     public void Slow()
     {
         slow = true;
