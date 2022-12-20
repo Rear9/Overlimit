@@ -28,7 +28,6 @@ public class camMovement : MonoBehaviour
         fov = PlayerPrefs.GetFloat("Fov");
         sensX = PlayerPrefs.GetFloat("Sens");
         sensY = PlayerPrefs.GetFloat("Sens");
-        RotateCam();
     }
 
     private void FixedUpdate()
@@ -40,10 +39,14 @@ public class camMovement : MonoBehaviour
         }
         fov = Mathf.Lerp(fov, baseFov + addFov, .25f);
         fov = Mathf.Clamp(fov, baseFov, maxFov);
-        cam.fieldOfView = fov;
 
     }
 
+    private void LateUpdate()
+    {
+        RotateCam();
+        cam.fieldOfView = fov;
+    }
     void RotateCam()
     {
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
