@@ -33,7 +33,7 @@ public class movement : MonoBehaviour
     public float slideTimer;
     public float slideCd;
     private float slideSpeed;
-    private float slideMult = 5f;
+    private float slideMult = 200f;
     private bool sliding;
 
     [Header("Crouch")]
@@ -184,7 +184,22 @@ public class movement : MonoBehaviour
         speedControl();
         RaycastHit hit;
         height = transform.localScale.y;
+        if (sliding)
+        {
+            if (state == State.Air)
+            {
+                slideSpeed = baseSpeed / 2;
+            }
+            slideTimer -= Time.deltaTime;
+            slideMult = Mathf.Lerp(slideMult, 0, 0.9f * Time.deltaTime);
+
+            if (slideTimer <= 0 && sliding)
+            {
+                UnSlide();
+            }
+        }
         ground = Physics.SphereCast(transform.position, 0.3f, Vector3.down,out hit, height, floor);
+
         if (ground)
         {
             rb.drag = baseDrag;
@@ -193,21 +208,11 @@ public class movement : MonoBehaviour
         {
             rb.drag = 0;
         }
-        
+
     }
 
     private void FixedUpdate()
     {
-        if (sliding)
-        {
-            slideTimer -= Time.deltaTime;
-            slideMult = Mathf.Lerp(slideMult, 0, 0.02f);
-
-            if(slideTimer<=0 && sliding)
-            {
-                UnSlide();
-            }
-        }
         movePlayer();
     }
     private void speedControl()
@@ -232,9 +237,9 @@ public class movement : MonoBehaviour
     }
     private void Slide()
     {
-        slideSpeed = baseSpeed * slideMult;
+        slideSpeed = baseSpeed*1.1f * slideMult * Time.fixedDeltaTime;
         Debug.Log(slideSpeed);
-        rb.AddForce(moveDir * slideSpeed, ForceMode.Acceleration);
+        rb.AddForce(moveDir * slideSpeed, ForceMode.Force);
         sliding = true;
     }
 
@@ -243,7 +248,7 @@ public class movement : MonoBehaviour
     {
         sliding = false;
         slideTimer = slideTime;
-        slideMult = 5f;
+        slideMult = 200f;
     }
 
     private void resetjump()

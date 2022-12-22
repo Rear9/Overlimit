@@ -49,6 +49,14 @@ public class mainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void ResetStats()
+    {
+        PlayerPrefs.SetFloat("lvl1pb", float.PositiveInfinity);
+        PlayerPrefs.SetFloat("lvl2pb", float.PositiveInfinity);
+        PlayerPrefs.SetFloat("Fov", 75);
+        PlayerPrefs.SetFloat("Sens", 250);
+        PlayerPrefs.SetFloat("Volume", 1);
+    }
     public void CloseHelp()
     {
         helpUI.SetActive(false);

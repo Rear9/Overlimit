@@ -8,7 +8,7 @@ using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public GameObject settingsMenu;
+    public GameObject settingsMenu,pauseMenu;
     public camMovement camScript;
     public AudioMixer mixer;
     Resolution[] resolutions;
@@ -80,10 +80,12 @@ public class SettingsMenu : MonoBehaviour
     public void CloseSettings()
     {
         settingsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
     }
 
     public void OpenSettings()
     {
         settingsMenu.SetActive(true);
+        pauseMenu.SetActive(false);
     }
 }

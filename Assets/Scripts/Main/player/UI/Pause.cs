@@ -29,8 +29,8 @@ public class Pause : MonoBehaviour
             }
             else
             {
-                UnPaused();
                 settingsMenu.CloseSettings();
+                UnPaused();
             }
         }
     }
