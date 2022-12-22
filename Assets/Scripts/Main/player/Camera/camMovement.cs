@@ -8,7 +8,6 @@ public class camMovement : MonoBehaviour
     public static float sensX, sensY, slowSens;
     public Camera cam;
     public Transform orientation;
-    public GameManager gameManager;
     public Wallrun Wallrun;
     public Climb climb;
     public Slowmo slowmo;

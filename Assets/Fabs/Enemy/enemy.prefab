@@ -129,5 +129,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castRange: 25
   distance: 0
-  shootSpeed: 20
+  shootSpeed: 30
   bullet: {fileID: 2905417131538209752, guid: a33598090016e4a4cbd51639a274c4c4, type: 3}

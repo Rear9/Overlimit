@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -32,7 +33,7 @@ public class movement : MonoBehaviour
     public float slideTimer;
     public float slideCd;
     private float slideSpeed;
-    private float slideMult = 200f;
+    private float slideMult = 5f;
     private bool sliding;
 
     [Header("Crouch")]
@@ -132,6 +133,18 @@ public class movement : MonoBehaviour
             crouching = false;
         }
     }
+
+    bool intToBool(int val)
+    {
+        if (val != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void Start()
     {
         slideCd = 0;
@@ -139,6 +152,9 @@ public class movement : MonoBehaviour
         gameManager.fovSlider.value = PlayerPrefs.GetFloat("Fov");
         gameManager.sensSlider.value = PlayerPrefs.GetFloat("Sens");
         gameManager.volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        gameManager.qualityDrop.value = PlayerPrefs.GetInt("QualityIndex");
+        gameManager.resDrop.value = PlayerPrefs.GetInt("currentres");
+        gameManager.fullscreen.isOn = intToBool(PlayerPrefs.GetInt("fullscreen"));
         ready = true;
         rb = GetComponent<Rigidbody>();
         startHeight = transform.localScale.y;
@@ -216,7 +232,7 @@ public class movement : MonoBehaviour
     }
     private void Slide()
     {
-        slideSpeed = baseSpeed * slideMult * Time.fixedDeltaTime;
+        slideSpeed = baseSpeed * slideMult;
         Debug.Log(slideSpeed);
         rb.AddForce(moveDir * slideSpeed, ForceMode.Acceleration);
         sliding = true;
@@ -227,7 +243,7 @@ public class movement : MonoBehaviour
     {
         sliding = false;
         slideTimer = slideTime;
-        slideMult = 200f;
+        slideMult = 5f;
     }
 
     private void resetjump()

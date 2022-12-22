@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
-        text.text = "" + Math.Round(time, 1);
+        text.text = "" + Math.Round(time, 1) + "s";
 
     }
 }

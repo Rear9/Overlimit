@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Slowmo : MonoBehaviour
 {
+    public Timer timer;
     public bool slow;
     public float cutDistance;
     public float slowInc, slowFinal;
@@ -43,6 +44,10 @@ public class Slowmo : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 if (!brokenObj) return;
+                if(brokenObj == fracEnemy)
+                {
+                    timer.time--;
+                }
                 Vector3 breakVel = hit.rigidbody.velocity;
                 Vector3 breakPos = hit.collider.gameObject.transform.position;
                 Quaternion breakRot = hit.collider.gameObject.transform.rotation;

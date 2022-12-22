@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ public class SettingsMenu : MonoBehaviour
     public GameObject settingsMenu;
     public camMovement camScript;
     public AudioMixer mixer;
-    public float setFov, setSens;
     Resolution[] resolutions;
     public TMP_Dropdown resolutionDrop;
     
@@ -25,7 +25,7 @@ public class SettingsMenu : MonoBehaviour
         int currentResolution = 0;
         for (int i=0; i<resolutions.Length; i++)
         {
-            string res = resolutions[i].width + " x " + resolutions[i].height;
+            string res = resolutions[i].width + " x " + resolutions[i].height + " @ " + resolutions[i].refreshRate + "hz";
             reses.Add(res);
 
             if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
@@ -41,11 +41,24 @@ public class SettingsMenu : MonoBehaviour
     public void SetResolution(int resolution)
     {
         Resolution res = resolutions[resolution];
+        PlayerPrefs.SetInt("currentres", resolution);
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
     }
 
+    int boolToInt(bool val)
+    {
+        if (val)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
     public void FullScreen(bool full)
     {
+        PlayerPrefs.SetInt("fullscreen", boolToInt(full));
         Screen.fullScreen = full;
     }
 
@@ -54,6 +67,15 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("Volume", sliderVal);
         mixer.SetFloat("masterVolume", sliderVal);
         PlayerPrefs.Save();
+    }
+
+    public void SetQuality(int qualityIndex)
+    {
+        PlayerPrefs.SetInt("QualityIndex", qualityIndex);
+        PlayerPrefs.Save();
+        QualitySettings.SetQualityLevel(PlayerPrefs.GetInt("QualityIndex"));
+
+
     }
     public void CloseSettings()
     {
