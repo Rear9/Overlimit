@@ -43,6 +43,23 @@ public class mainMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
         Time.timeScale = 1;
     }
+    public void Load3()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
+        Time.timeScale = 1;
+    }
+
+    public void Load4()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 4);
+        Time.timeScale = 1;
+    }
+    public void Load5()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 5);
+        Time.timeScale = 1;
+    }
+
 
     public void Quit()
     {
@@ -53,6 +70,9 @@ public class mainMenu : MonoBehaviour
     {
         PlayerPrefs.SetFloat("lvl1pb", float.PositiveInfinity);
         PlayerPrefs.SetFloat("lvl2pb", float.PositiveInfinity);
+        PlayerPrefs.SetFloat("lvl3pb", float.PositiveInfinity);
+        PlayerPrefs.SetFloat("lvl4pb", float.PositiveInfinity);
+        PlayerPrefs.SetFloat("lvl5pb", float.PositiveInfinity);
         PlayerPrefs.SetFloat("Fov", 75);
         PlayerPrefs.SetFloat("Sens", 250);
         PlayerPrefs.SetFloat("Volume", 1);

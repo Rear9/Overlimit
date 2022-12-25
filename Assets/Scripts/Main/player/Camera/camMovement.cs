@@ -32,6 +32,8 @@ public class camMovement : MonoBehaviour
             mouseX *= slowSens;
             mouseY *= slowSens;
         }
+        yRot += mouseX;
+        xRot -= mouseY;
         fov = PlayerPrefs.GetFloat("Fov");
         sensX = PlayerPrefs.GetFloat("Sens");
         sensY = PlayerPrefs.GetFloat("Sens");
@@ -56,15 +58,6 @@ public class camMovement : MonoBehaviour
     }
     void RotateCam()
     {
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
-        if (slowmo.slow)
-        {
-            mouseX *= slowSens;
-            mouseY *= slowSens;
-        }
-        yRot += mouseX;
-        xRot -= mouseY;
         xRot = Mathf.Clamp(xRot, -90f, 90f);
         transform.rotation = Quaternion.Euler(xRot, yRot, Wallrun.Tilt);
         orientation.rotation = Quaternion.Euler(0, yRot, 0);

@@ -17,7 +17,7 @@ public class LevelComplete : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("PlayerBase")){
-            if (score.score > 0 || enemies.enemyCount <= enemies.enemyCount-1)
+            if (score.score > 0 || enemies.kills>0)
             {
                 completed = true;
                 Time.timeScale = 0;
@@ -36,6 +36,29 @@ public class LevelComplete : MonoBehaviour
 
                     Debug.Log("Level 2 PB: " + PlayerPrefs.GetFloat("lvl2pb"));
                 }
+                /*
+                else if (finalTime < PlayerPrefs.GetFloat("lvl3pb") && SceneManager.GetActiveScene().buildIndex == 3)
+                {
+                    PlayerPrefs.SetFloat("lvl3pb", (float)finalTime);
+                    PlayerPrefs.Save();
+
+                    Debug.Log("Level 3 PB: " + PlayerPrefs.GetFloat("lvl3pb"));
+                }
+                else if (finalTime < PlayerPrefs.GetFloat("lvl4pb") && SceneManager.GetActiveScene().buildIndex == 4)
+                {
+                    PlayerPrefs.SetFloat("lvl4pb", (float)finalTime);
+                    PlayerPrefs.Save();
+
+                    Debug.Log("Level 4 PB: " + PlayerPrefs.GetFloat("lvl4pb"));
+                }
+                else if (finalTime < PlayerPrefs.GetFloat("lvl5pb") && SceneManager.GetActiveScene().buildIndex == 5)
+                {
+                    PlayerPrefs.SetFloat("lvl5pb", (float)finalTime);
+                    PlayerPrefs.Save();
+
+                    Debug.Log("Level 5 PB: " + PlayerPrefs.GetFloat("lvl5pb"));
+                }
+                */
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 levelCompleteUI.SetActive(true);

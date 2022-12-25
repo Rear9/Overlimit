@@ -35,6 +35,20 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat("lvl2pb", float.PositiveInfinity);
         }
+        /*
+        if (!PlayerPrefs.HasKey("lvl3pb"))
+        {
+            PlayerPrefs.SetFloat("lvl3pb", float.PositiveInfinity);
+        }
+        if (!PlayerPrefs.HasKey("lvl4pb"))
+        {
+            PlayerPrefs.SetFloat("lvl4pb", float.PositiveInfinity);
+        }
+        if (!PlayerPrefs.HasKey("lvl5pb"))
+        {
+            PlayerPrefs.SetFloat("lvl5pb", float.PositiveInfinity);
+        }
+        */
         PlayerPrefs.Save();
     }
 }
