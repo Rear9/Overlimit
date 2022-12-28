@@ -36,7 +36,7 @@ public class LevelComplete : MonoBehaviour
 
                     Debug.Log("Level 2 PB: " + PlayerPrefs.GetFloat("lvl2pb"));
                 }
-                /*
+                
                 else if (finalTime < PlayerPrefs.GetFloat("lvl3pb") && SceneManager.GetActiveScene().buildIndex == 3)
                 {
                     PlayerPrefs.SetFloat("lvl3pb", (float)finalTime);
@@ -44,6 +44,7 @@ public class LevelComplete : MonoBehaviour
 
                     Debug.Log("Level 3 PB: " + PlayerPrefs.GetFloat("lvl3pb"));
                 }
+                /*
                 else if (finalTime < PlayerPrefs.GetFloat("lvl4pb") && SceneManager.GetActiveScene().buildIndex == 4)
                 {
                     PlayerPrefs.SetFloat("lvl4pb", (float)finalTime);

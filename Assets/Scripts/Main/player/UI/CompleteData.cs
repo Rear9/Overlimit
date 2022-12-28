@@ -26,11 +26,12 @@ public class CompleteData : MonoBehaviour
         {
             pb = PlayerPrefs.GetFloat("lvl2pb");
         }
-        /*
+        
         else if (SceneManager.GetActiveScene().buildIndex == 3)
         {
             pb = PlayerPrefs.GetFloat("lvl3pb");
         }
+        /*
         else if (SceneManager.GetActiveScene().buildIndex == 4)
         {
             pb = PlayerPrefs.GetFloat("lvl4pb");

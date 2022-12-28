@@ -7,22 +7,40 @@ using TMPro;
 
 public class mainMenu : MonoBehaviour
 {
-    public GameObject helpUI, LevelSelect;
+    public GameObject helpUI, credits;
+    public GameObject[] levelSelects;
 
     private void Start()
     {
+        if(PlayerPrefs.GetInt("Completed") == 1)
+        {
+            credits.SetActive(true);
+        }
     }
     public void Play()
     {
         if (PlayerPrefs.HasKey("lvl1pb") && PlayerPrefs.GetFloat("lvl1pb") != float.PositiveInfinity)
         {
-            if (!LevelSelect.activeInHierarchy)
+            if (!levelSelects[0].activeInHierarchy || !levelSelects[1].activeInHierarchy)
             {
-                LevelSelect.SetActive(true);
+                levelSelects[0].SetActive(true);
+                levelSelects[1].SetActive(true);
             }
             else
             {
-                LevelSelect.SetActive(false);
+                levelSelects[0].SetActive(false);
+                levelSelects[1].SetActive(false);
+            }
+
+            if(PlayerPrefs.HasKey("lvl2pb") && PlayerPrefs.GetFloat("lvl2pb") != float.PositiveInfinity){
+                if (!levelSelects[2].activeInHierarchy)
+                {
+                    levelSelects[2].SetActive(true);
+                }
+                else
+                {
+                    levelSelects[2].SetActive(false);
+                }
             }
         }
         else
@@ -76,6 +94,7 @@ public class mainMenu : MonoBehaviour
         PlayerPrefs.SetFloat("Fov", 75);
         PlayerPrefs.SetFloat("Sens", 250);
         PlayerPrefs.SetFloat("Volume", 1);
+        PlayerPrefs.SetInt("Completed", 0);
     }
     public void CloseHelp()
     {
@@ -85,5 +104,10 @@ public class mainMenu : MonoBehaviour
     public void OpenHelp()
     {
         helpUI.SetActive(true);
+    }
+
+    public void CloseCredits()
+    {
+        credits.SetActive(false);
     }
 }

@@ -77,6 +77,7 @@ public class Pause : MonoBehaviour
         else
         {
             MenuLoad();
+            PlayerPrefs.SetInt("Completed", 1);
         }
         Time.timeScale = 1;
     }
