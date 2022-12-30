@@ -9,12 +9,18 @@ public class mainMenu : MonoBehaviour
 {
     public GameObject helpUI, credits;
     public GameObject[] levelSelects;
+    private static bool creditsShowed;
 
     private void Start()
     {
-        if(PlayerPrefs.GetInt("Completed") == 1)
+        if (PlayerPrefs.GetInt("Completed") == 0)
+        {
+            creditsShowed = false;
+        }
+        if (PlayerPrefs.GetInt("Completed") == 1 && !creditsShowed)
         {
             credits.SetActive(true);
+            creditsShowed = true;
         }
     }
     public void Play()
@@ -86,6 +92,14 @@ public class mainMenu : MonoBehaviour
 
     public void ResetStats()
     {
+        for (int i=0; i<levelSelects.Length; i++)
+        {
+            if (levelSelects[i].activeInHierarchy)
+            {
+                levelSelects[i].SetActive(false);
+            }
+        }
+
         PlayerPrefs.SetFloat("lvl1pb", float.PositiveInfinity);
         PlayerPrefs.SetFloat("lvl2pb", float.PositiveInfinity);
         PlayerPrefs.SetFloat("lvl3pb", float.PositiveInfinity);

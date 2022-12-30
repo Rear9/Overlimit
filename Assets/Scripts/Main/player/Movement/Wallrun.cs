@@ -5,6 +5,7 @@ using System;
 
 public class Wallrun : MonoBehaviour
 {
+    private movement movement;
     public Transform orientation;
     public float wallDist = .5f, minimumJumpH = 1.5f, wallUpFactor = 10f, exitTime, exitTimer = .5f, wallJumpForce, camTilt, camTiltTime, wallSpeed;
     public float Tilt { get; private set; }
@@ -17,6 +18,7 @@ public class Wallrun : MonoBehaviour
 
     private void Awake()
     {
+        movement = GetComponent<movement>();
         rb = GetComponent<Rigidbody>();
     }
 
@@ -110,5 +112,6 @@ public class Wallrun : MonoBehaviour
     void StopWallRun()
     {
         Tilt = Mathf.Lerp(Tilt,0,camTiltTime * Time.deltaTime);
+        movement.state = movement.State.Air;
     }
 }
