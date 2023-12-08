@@ -85,19 +85,19 @@ public class movement : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x, Mathf.Lerp(transform.localScale.y, startHeight, 0.1f), transform.localScale.z);
             UnSlide();
         }
-        if (ground && !crouching && !sliding && Input.GetKey(sprintKey) && Input.GetAxis("Vertical") > 0.9 && Input.GetAxis("Horizontal") == 0)
+        if(ground && !crouching && !sliding && Input.GetKey(sprintKey) && Input.GetAxis("Vertical") > 0.9 && Input.GetAxis("Horizontal") == 0)
         {
             state = State.Sprint;
             jumpF = sprintJumpF;
             baseSpeed = Mathf.Lerp(baseSpeed, sprintSpeed, .005f);
         }
-        else if (ground && !crouching && !sliding)
+        else if(ground && !crouching && !sliding)
         {
-            jumpF = baseJumpF;
             state = State.Walk;
+            jumpF = baseJumpF;
             baseSpeed = Mathf.Lerp(baseSpeed, walkSpeed, .01f);
         }
-        else if (Wallrun.wallrunning && !ground)
+        else if(Wallrun.wallrunning && !ground)
         {
             state = State.Wallrunning;
         }
