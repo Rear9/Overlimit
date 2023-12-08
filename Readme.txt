@@ -24,7 +24,3 @@ Space (moving alongside a wall) - Wall-run
 Left Mouse Button - Break Enemies/Bullets
 
 [Clicking an enemy/bullet shatters it]
-
-Presentation Video:
-
-https://youtu.be/9XsOUe5feIk
